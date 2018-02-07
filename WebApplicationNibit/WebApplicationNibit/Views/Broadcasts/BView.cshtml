@@ -1,0 +1,42 @@
+﻿@using GridMvc.Html
+@using GridMvc.Sorting
+@using GridMvc
+@using System.Web.Mvc;
+
+
+@model  WebApplicationNibit.Models.BroadcastsList
+@{
+    ViewBag.Title = "Broadcasts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Grid(Model.Broadcasts).Columns(columns =>
+{
+
+/*columns.Bound(x => x.Birthday).Format("{0: MM/dd/yyyy}").Filterable(x => x.Cell(y => y.Template("datePicker")));*/
+/* Adding "BroadcstDate" column: */
+columns.Add(o => o.BroadcastDate, "Broadcast Date")
+.Titled("Broadcast Date")
+.SortInitialDirection(GridSortDirection.Descending)
+.Format("{0:dd/MM/yyyy}")
+.Filterable(true)
+.SetWidth(110).Filterable(true);
+
+/* Adding "BroadcastID" column: */
+columns.Add(o => o.BroadcastId)
+        .Titled("Broadcast Number")
+        .SetWidth(100);
+/* Adding "BroadcastType" column: */
+columns.Add(o => o.BroadcastType)
+        .Titled("Broadcast Type")
+        .SetWidth(100);
+/* Adding not mapped column, that renders body, using inline Razor html helper */
+columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => @<button id="details" type="submit" onclick="@("location.href='" + Url.Action("BroadcastDetails", "Broadcasts",new { id=o.BroadcastId}) + "'")">Details</button>);
+
+}).WithPaging(5).Sortable()
+

@@ -1,0 +1,15 @@
+﻿@using GridMvc.Html
+@model WebApplicationNibit.Models.Broadcast
+@{
+    ViewBag.Title = "Broadcast Details:";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BroadcastDetails</h2>
+
+<ul>
+    <li>fileName Type: @Model.fileName</li>
+    <li>Data Amount: @Model.DataAmount</li>
+    <li>sentBy: @Model.sentBy</li>
+
+</ul>
